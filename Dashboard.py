@@ -24,7 +24,7 @@ local_url = f'postgresql://postgres:{os.getenv("DB_PASSWORD")}@localhost/eve_mar
 engine = create_engine(supabase_url if supabase_url else local_url)
 
 # Page config
-st.set_page_config(page_title="EVE Market Anomaly Detector", layout="wide")
+st.set_page_config(page_title="EVE Market Anomaly Detector", layout="wide",page_icon=":globe_with_meridians:")
 st.title("⚔️ EVE Online Market Anomaly Detector")
 st.markdown("Real-time market manipulation and anomaly detection for the Jita trade hub")
 
