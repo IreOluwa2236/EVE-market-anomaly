@@ -16,8 +16,8 @@ with open(env_path) as f:
 password = os.getenv("DB_PASSWORD")
 engine = create_engine(f'postgresql://postgres:{password}@localhost/eve_market')
 
-st.set_page_config(page_title="EVE Market Anomaly Detector", layout="wide")
-st.title("🚀 EVE Online Market Anomaly Detector")
+st.set_page_config(page_title="EVE Market Anomaly Detector",page_icon=":bookmark:", layout="wide")
+st.title("⚔️ EVE Online Market Anomaly Detector")
 st.markdown("Real-time market manipulation and anomaly detection for Jita trade hub")
 
 # Sidebar
@@ -37,7 +37,17 @@ if len(filtered) == 0:
     st.stop()
 
 selected_name = st.sidebar.selectbox("Select item", filtered['name'].tolist())
-selected_id = filtered[filtered['name'] == selected_name]['type_id'].values[0]
+selected_id = int(filtered[filtered['name'] == selected_name]['type_id'].values[0])
+
+# Item header with image
+col1, col2 = st.columns([1, 6])
+with col1:
+    st.image(
+        f"https://images.evetech.net/types/{selected_id}/icon",
+        width=64
+    )
+with col2:
+    st.subheader(selected_name)
 
 # Load price history for selected item
 @st.cache_data
@@ -60,6 +70,10 @@ def get_item_anomalies(type_id):
 
 history = get_history(selected_id)
 anomalies = get_item_anomalies(selected_id)
+
+#item image
+st.subheader(f" Item Overview: {selected_name}")
+
 
 # Price chart
 st.subheader(f"📈 Price History — {selected_name}")
